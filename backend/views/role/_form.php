@@ -27,7 +27,7 @@ use yii\helpers\ArrayHelper;
         <div class="box-body">
             <?php $roles= ArrayHelper::map($roles,'name','name'); ?>
             <?= $form->field($model, '_roles')->checkboxList($roles,[
-                'class'=> 'checkbox',
+                'class'=> 'checkbox '.$model->category,
                 'separator' => '<br/>',
             ])->label(Yii::t('backend', 'Roles')); ?>
 
