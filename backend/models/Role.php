@@ -44,6 +44,7 @@ class Role extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'unique'],
+            [['group'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
             //[['name', 'rule_name'], 'string', 'max' => 64],

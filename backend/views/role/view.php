@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'name',
                         'label' => Yii::t('backend', 'Name'),
                     ],
+
+					'group' => [
+						'attribute' => 'group',
+						'label' => Yii::t('backend', 'Group'),
+					],
                     'description' => [
                         'attribute' => 'description',
                         'label' => Yii::t('backend', 'Description'),
@@ -71,14 +76,32 @@ $this->params['breadcrumbs'][] = $this->title;
             
         <div class="box box-warning">
         <div class="box-body">
+        	<p>
             <label class="control-label"><?= Yii::t('backend', 'Roles') ?></label>
-            <?php $roles= ArrayHelper::map($roles,'name','name'); ?>
+            </p>
+            
             <?php $roleschecked= ArrayHelper::map($roleschecked,'child','child'); ?>
-            <?= Html::checkboxList('roles',$roleschecked,$roles,[
-                'class'=> 'checkbox',
-                'separator' => '<br/>',
-                'itemOptions' => ['disabled'=>'']
-            ]) ?>
+            
+            <?php 
+            	foreach ($roles as $key=>$_role){
+            		echo '<h5 style="background-color:#e2e2e2;padding:4px">'.$key.'</h5>';
+            		
+            		foreach ($_role as $__role){
+            			$role[$__role] = $__role;
+            		}
+            		
+            		echo Html::checkboxList('roles',$roleschecked,$role,[
+            				'class'=> 'checkbox',
+							'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+							'item' => function($index, $label, $name, $checked, $value) {
+										$checked=$checked?"checked":"";
+										$return = '<label><input type="checkbox" disabled="disabled" value="'.$label.'" name="_roles[]" '.$checked.'>'.$label.'</label>';
+										return $return;
+									  }
+							]);
+					unset($role);
+            	}
+            ?>
 
         </div>
         </div>            

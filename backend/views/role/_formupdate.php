@@ -16,6 +16,8 @@ use yii\helpers\ArrayHelper;
             <div class="box-body">
             <?= $form->field($model, '_name')->hiddenInput(['value'=>$model->name]) ?>
             <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label(Yii::t('backend', 'Name')); ?>
+ 
+            <?= $form->field($model, 'group')->dropDownList(Yii::$app->params['roleGroup'], ['prompt'=>'Please Select ...'])->label(Yii::t('backend', 'Group')); ?>
         
             <?= $form->field($model, 'description')->textInput()->label(Yii::t('backend', 'Description')); ?>
         
@@ -26,13 +28,32 @@ use yii\helpers\ArrayHelper;
         
         <div class="box box-warning">
         <div class="box-body">
+        	<p>
             <label class="control-label"><?= Yii::t('backend', 'Roles') ?></label>
-            <?php $roles= ArrayHelper::map($roles,'name','name'); ?>
+            </p>
+            
             <?php $roleschecked= ArrayHelper::map($roleschecked,'child','child'); ?>
-            <?= Html::checkboxList('Role[_roles]',$roleschecked,$roles,[
-                'class'=> 'checkbox',
-                'separator' => '<br/>',
-            ]) ?>
+            
+            <?php 
+            	foreach ($roles as $key=>$_role){
+            		echo '<h5 style="background-color:#e2e2e2;padding:4px">'.$key.'</h5>';
+            		
+            		foreach ($_role as $__role){
+            			$role[$__role] = $__role;
+            		}
+            		
+            		echo Html::checkboxList('roles',$roleschecked,$role,[
+            				'class'=> 'checkbox',
+							'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+							'item' => function($index, $label, $name, $checked, $value) {
+										$checked=$checked?"checked":"";
+										$return = '<label><input type="checkbox" value="'.$label.'" name="_roles[]" '.$checked.'>'.$label.'</label>';
+										return $return;
+									  }
+							]);
+					unset($role);
+            	}
+            ?>
 
         </div>
         </div>  

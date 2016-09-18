@@ -60,7 +60,10 @@ class RoleController extends Controller
         
         //get roles
         $searchModel    = new RoleSearch();
-        $roles          = $searchModel->find('name')->Where(['=', 'type', 1])->andWhere(['<>','name',$id])->all();
+        $_roles          = $searchModel->find('name')->Where(['=', 'type', 1])->andWhere(['<>','name',$id])->all();
+        foreach ($_roles as $_role){
+        	$roles[$_role->group][] = $_role->name;
+        }        
         
         //get checked roles
         $permission     = new Permissions();
@@ -104,8 +107,8 @@ class RoleController extends Controller
             $model->created_at  = $model->updated_at = time();
             $model->save();
 
-            if($_POST['Role']['_roles']){
-                $_rolesList         = $_POST['Role']['_roles'];
+            if($_POST['_roles']){
+                $_rolesList         = $_POST['_roles'];
                 foreach ($_rolesList as $val){
                     $this->savePermissions($model->name,$val);
                 }                
@@ -120,7 +123,11 @@ class RoleController extends Controller
              
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
-            $roles       = $searchModel->find()->Where(['=', 'type', 1])->all();//Yii::$app->request->queryParams);
+            $_roles  = $searchModel->find()->Where(['=', 'type', 1])->orderBy('group asc')->all();
+            foreach ($_roles as $_role){
+            	$roles[$_role->group][] = $_role->name;
+            }
+
             $permissions = $searchModel->find()
             ->Where(['=', 'type', 2])
             ->andWhere(['not like', 'name', 'ctl'])
@@ -152,8 +159,8 @@ class RoleController extends Controller
             $model->updated_at = time();
             $model->save();
             
-            if(isset($_POST['Role']['_roles']) && !empty($_POST['Role']['_roles'])){
-                $_rolesList         = $_POST['Role']['_roles'];
+            if(isset($_POST['_roles']) && !empty($_POST['_roles'])){
+                $_rolesList         = $_POST['_roles'];
                 foreach ($_rolesList as $val){
                     $this->savePermissions($model->name,$val);
                 }
@@ -170,7 +177,10 @@ class RoleController extends Controller
         } else {
             //get roles
             $searchModel    = new RoleSearch();
-            $roles          = $searchModel->find('name')->Where(['=', 'type', 1])->andWhere(['<>','name',$id])->all();
+            $_roles          = $searchModel->find('name')->Where(['=', 'type', 1])->andWhere(['<>','name',$id])->all();
+            foreach ($_roles as $_role){
+            	$roles[$_role->group][] = $_role->name;
+            }
             
             //get checked roles
             $permission     = new Permissions();
