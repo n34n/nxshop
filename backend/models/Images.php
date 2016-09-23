@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $model
+ * @property string $file
  * @property integer $related_id
  * @property string $path_l
  * @property string $path_m
@@ -17,6 +18,8 @@ use Yii;
  */
 class Images extends \yii\db\ActiveRecord
 {
+	public $filename;
+	public $file;
     /**
      * @inheritdoc
      */
@@ -33,7 +36,7 @@ class Images extends \yii\db\ActiveRecord
         return [
             [['model', 'related_id'], 'required'],
             [['related_id', 'created_at'], 'integer'],
-            [['model'], 'string', 'max' => 50],
+            [['model', 'file'], 'string', 'max' => 50],
             [['path_l', 'path_m', 'path_s'], 'string', 'max' => 100],
         ];
     }
@@ -45,11 +48,12 @@ class Images extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'model' => '模块名',
-            'related_id' => '关联id',
-            'path_l' => '大图存放地址',
-            'path_m' => '中图存放地址',
-            'path_s' => '小图图存放地址',
+            'model' => 'Model',
+            'file' => 'File',
+            'related_id' => 'Related ID',
+            'path_l' => 'Path L',
+            'path_m' => 'Path M',
+            'path_s' => 'Path S',
             'created_at' => 'Created At',
         ];
     }
