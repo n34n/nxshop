@@ -5,7 +5,7 @@ use yii\helpers\Url;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-$avatar = Images::find()->where(['related_id'=>Yii::$app->user->id])->select('path_m,path_s')->one();
+$avatar = Images::find()->where(['model'=>'user','related_id'=>Yii::$app->user->id])->select('path_m,path_s')->one();
 if($avatar == null){
     $avatar = (object)array();;
     $avatar->path_s = DEFAULT_AVATAR;
@@ -237,7 +237,7 @@ if($avatar == null){
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $avatar->path_s; ?>" class="user-image" alt="User Image"/>
+                        <img src="<?= FILE_PATH.$avatar->path_s; ?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">
                         <?php
                         if(Yii::$app->language == 'zh'){
@@ -251,7 +251,7 @@ if($avatar == null){
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $avatar->path_m; ?>" class="img-circle"
+                            <img src="<?= FILE_PATH.$avatar->path_m; ?>" class="img-circle"
                                  alt="User Image"/>
 
                             <p>

@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use mdm\admin\components\AccessControl;
+use backend\models\search\RoleSearch;
 //use yii\base\Action;
 //use hyii2\avatar\CropAction;
 
@@ -100,8 +101,8 @@ class UserController extends Controller
             //header("Content-type:text/html;charset=utf-8");
             $userid  = $model->getPrimaryKey();
             $manager = Yii::$app->getAuthManager();
-            if(isset($_POST['User']['_roles']) && !empty($_POST['User']['_roles'])){
-                foreach ($_POST['User']['_roles'] as $_role) {
+            if(isset($_POST['_roles']) && !empty($_POST['_roles'])){
+                foreach ($_POST['_roles'] as $_role) {
                     $role =Yii::$app->authManager->getRole($_role);
                     $manager->assign($role,$userid);
                 }            
@@ -109,8 +110,15 @@ class UserController extends Controller
 
             return $this->redirect(['index']);
         }else{
-            $manager = Yii::$app->getAuthManager();
-            $roles = $manager->getRoles();
+            //$manager = Yii::$app->getAuthManager();
+            //$_roles = $manager->getRoles();
+            //print_r($_roles);die();
+            
+            $searchModel    = new RoleSearch();
+            $_roles  = $searchModel->find('name')->Where(['=', 'type', 1])->all();
+            foreach ($_roles as $_role){
+            	$roles[$_role->group][] = $_role->name;
+            }
             $errors = $model->errors;
         }
         
@@ -137,8 +145,8 @@ class UserController extends Controller
 
             $manager = Yii::$app->getAuthManager();
             $manager->revokeAll($id);
-            if(isset($_POST['User']['_roles']) && !empty($_POST['User']['_roles'])){
-                foreach ($_POST['User']['_roles'] as $_role) {
+            if(isset($_POST['_roles']) && !empty($_POST['_roles'])){
+                foreach ($_POST['_roles'] as $_role) {
                     $role =Yii::$app->authManager->getRole($_role);
                     $manager->assign($role,$id);
                 }
@@ -147,7 +155,14 @@ class UserController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $manager        = Yii::$app->getAuthManager();
-            $roles          = $manager->getRoles();
+            //$roles          = $manager->getRoles();
+            
+            $searchModel    = new RoleSearch();
+            $_roles  = $searchModel->find('name')->Where(['=', 'type', 1])->all();
+            foreach ($_roles as $_role){
+            	$roles[$_role->group][] = $_role->name;
+            }
+            
             $roleschecked   = $manager->getRolesByUser($id);
             //print_r($roleschecked);die();
             return $this->render('update', [
@@ -218,11 +233,13 @@ class UserController extends Controller
         //$model = $this->findModel($id);
         
         $model = User::find()->joinWith('images')->where(['user.id'=>$id])->one();
-               
-        if(isset($model->images)){
+        
+        //echo User::find()->joinWith('images')->where(['images.model' => 'user','user.id'=>$id])->select(['user.*','images.*'])->createCommand()->getRawSql();
+        //die();
+        if(isset($model->images) && !empty($model->images)){
             $img = $model->images;
         }else{
-            $img ='';
+            $img = '';
         }
 
         return $this->render('profile', [
@@ -260,7 +277,7 @@ class UserController extends Controller
                     'smallImageWidth' => '50',    //小图默认宽度
                     'smallImageHeight' => '50',   //小图默认高度
                     //头像上传目录（注：目录前不能加"/"）
-                    'uploadPath' => '../../uploads/images/avatar',
+                    'uploadPath' => '../../uploads/',
                     'model' => 'user',
                 ],
             ]

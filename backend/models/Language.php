@@ -13,6 +13,7 @@ use Yii;
  */
 class Language extends \yii\db\ActiveRecord
 {
+	public $filename;
     /**
      * @inheritdoc
      */

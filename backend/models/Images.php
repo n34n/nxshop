@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\components\Upload;
 
 /**
  * This is the model class for table "{{%images}}".
@@ -18,8 +19,6 @@ use Yii;
  */
 class Images extends \yii\db\ActiveRecord
 {
-	public $filename;
-	public $file;
     /**
      * @inheritdoc
      */
@@ -57,4 +56,13 @@ class Images extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+    
+    public function deleteimg($id)
+    {
+    	$model = $this->findModel($id);
+    	Upload::deleteImg($model->path_l);
+    	Upload::deleteImg($model->path_m);
+    	Upload::deleteImg($model->path_s);
+    	echo json_encode("succ");
+    }    
 }

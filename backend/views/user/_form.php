@@ -63,11 +63,22 @@ use yii\helpers\ArrayHelper;
     <div class="col-md-6">
         <div class="box box-warning">
         <div class="box-body">
-            <?php $roles= ArrayHelper::map($roles,'name','name'); ?>
-            <?= $form->field($model, '_roles')->checkboxList($roles,[
-                'class'=> 'checkbox',
-                'separator' => '<br/>',
-            ])->label(Yii::t('backend', 'Roles')); ?>
+            <p>
+            <label class="control-label"><?= Yii::t('backend', 'Roles') ?></label>
+            </p>
+            <?php 
+            	foreach ($roles as $key=>$role){
+            		echo '<h5 style="background-color:#e2e2e2;padding:4px">'.$key.'</h5>';
+            		echo $form->field($model, '_roles')->checkboxList($role,[
+            				'class'=> 'checkbox',
+							'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+							'item' => function($index, $label, $name, $checked, $value) {
+									$return = '<label><input type="checkbox" value="'.$label.'" name="_roles[]">'.$label.'</label>';
+									return $return;
+								}
+							])->label(false);
+            	}
+            ?>
         </div>
         </div>
     </div>

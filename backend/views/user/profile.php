@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-md-3">
 <div class="box"> 
     <div class=" box-body">
-    <?= AvatarWidget::widget(['imageUrl'=> (isset($img) && $img!='')?$img->path_l:DEFAULT_AVATAR]); ?>
+    <?= AvatarWidget::widget(['imageUrl'=> (isset($img) && $img!='')?FILE_PATH.$img->path_l:DEFAULT_AVATAR]); ?>
     </div>
       
 

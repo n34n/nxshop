@@ -17,7 +17,7 @@ use yii\debug\models\search\Db;
             <div class="box-body">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label(Yii::t('backend', 'Name')); ?>
     
-            <?= $form->field($model, 'group')->dropDownList(Yii::$app->params['roleGroup'], ['prompt'=>'Please Select ...'])->label(Yii::t('backend', 'Group')); ?>
+            <?= $form->field($model, 'group')->dropDownList(Yii::$app->params['roleGroup'], ['prompt'=>Yii::t('backend', 'Please Select ...')])->label(Yii::t('backend', 'Group')); ?>
 
             <?= $form->field($model, 'description')->textInput()->label(Yii::t('backend', 'Description')); ?>
         

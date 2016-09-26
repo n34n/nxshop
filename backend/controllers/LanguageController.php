@@ -80,6 +80,7 @@ class LanguageController extends Controller
         $model = new Language();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        	$model->filename = $_POST['Language']['code'];
             $model->icon = Upload::uploadImg($model,'icon',$this->flag_path);
             $model->status = $_POST['Language']['status'];
             $model->save();
@@ -103,9 +104,7 @@ class LanguageController extends Controller
         $filename   = $model->icon;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if(Upload::uploadImg($model,'icon',$this->flag_path,'update',$filename)){
-                
-            }
+        	$model->filename = $_POST['Language']['code'];
             $model->icon = Upload::uploadImg($model,'icon',$this->flag_path,'update',$filename);
             $model->status = $_POST['Language']['status'];
             $model->save();

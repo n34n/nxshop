@@ -64,14 +64,33 @@ use yii\helpers\ArrayHelper;
         <div class="box box-warning">
         <div class="box-body">
             <div class="form-group field-user-_roles">
-                <label class="col-sm-2 control-label"><?= Yii::t('backend', 'Roles') ?></label>
-                <div class="col-sm-10">
-                <?php $roles= ArrayHelper::map($roles,'name','name'); ?>
-                <?php $roleschecked= ArrayHelper::map($roleschecked,'name','name'); ?>
-                <?= Html::checkboxList('User[_roles]',$roleschecked,$roles,[
-                    'class'=> 'checkbox',
-                    'separator' => '<br/>',
-                ]) ?>
+                <div class="col-md-12">
+        	<p>
+            <label class="control-label"><?= Yii::t('backend', 'Roles') ?></label>
+            </p>
+            
+            <?php $roleschecked= ArrayHelper::map($roleschecked,'name','name'); ?>
+            
+            <?php 
+            	foreach ($roles as $key=>$_role){
+            		echo '<h5 style="background-color:#e2e2e2;padding:4px">'.$key.'</h5>';
+            		
+            		foreach ($_role as $__role){
+            			$role[$__role] = $__role;
+            		}
+            		
+            		echo Html::checkboxList('roles',$roleschecked,$role,[
+            				'class'=> 'checkbox',
+							'separator' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+							'item' => function($index, $label, $name, $checked, $value) {
+										$checked=$checked?"checked":"";
+										$return = '<label><input type="checkbox" value="'.$label.'" name="_roles[]" '.$checked.'>'.$label.'</label>';
+										return $return;
+									  }
+							]);
+					unset($role);
+            	}
+            ?>
             </div>
             </div>
         </div>

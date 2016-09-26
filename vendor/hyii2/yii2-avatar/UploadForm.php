@@ -38,7 +38,10 @@ class UploadForm extends Model
     {
         try{
             $userId = isset(Yii::$app->user->identity->id)?Yii::$app->user->identity->id:"000000";
-            $path = $this->config['uploadPath'].'/'.$userId;
+            //$this->config['uploadPath'] = Yii::getAlias($uploadpath).'/';
+            $path = $this->config['uploadPath'].'images/avatar/'.$userId;
+            //die();
+            $savepath = 'images/avatar/'.$userId;
     
             if(!$this->mkDirs($path)){
                 throw new \Exception('上传目录生成失败！');
@@ -47,13 +50,15 @@ class UploadForm extends Model
             //图片裁剪
             $bigImage = $this->crop();
             //配置大中小图上传路径
-            $bigImageUrl = $path.'/'.date("YmdHis") . '_big'.'.'.$this->imageFile->extension;
-            $middleImageUrl = $path.'/'.date("YmdHis") . '_middle'.'.'.$this->imageFile->extension;
-            $smallImageUrl = $path.'/'.date("YmdHis") . '_small'.'.'.$this->imageFile->extension;
+            $filename = date("YmdHis").'.'.$this->imageFile->extension;
             
-            $this->imagePath['l'] = $bigImageUrl;
-            $this->imagePath['m'] = $middleImageUrl;
-            $this->imagePath['s'] = $smallImageUrl;
+            $bigImageUrl = $path.'/l_'.$filename;
+            $middleImageUrl = $path.'/m_'.$filename;
+            $smallImageUrl = $path.'/s_'.$filename;
+            
+            $this->imagePath['l'] = $savepath.'/l_'.$filename;
+            $this->imagePath['m'] = $savepath.'/m_'.$filename;
+            $this->imagePath['s'] = $savepath.'/s_'.$filename;
             
             //生成缩略中小图
             $middleImage = imagecreatetruecolor($this->config['middleImageWidth'], $this->config['middleImageHeight']);
@@ -102,7 +107,7 @@ class UploadForm extends Model
      */
     
     public function crop()
-    {     
+    {   
         $data = json_decode($this->avatarData);
         $size = getimagesize($this->imageFile->tempName);
         

@@ -27,7 +27,7 @@ class CropAction extends Action
             'smallImageWidth' => '50',  //小图默认宽度
             'smallImageHeight' => '50', //小图默认高度
             //头像上传目录
-            'uploadPath' => '。。/。。/uploads/images/avatar',
+            'uploadPath' => '../../uploads/',
             'model' => '',
         ];
         $this->config = ArrayHelper::merge($config, $this->config);

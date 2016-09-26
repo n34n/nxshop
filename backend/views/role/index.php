@@ -66,6 +66,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'enableSorting' => false,
             ],
 
+			'group' => [
+				'attribute' => 'group',
+				'label' => Yii::t('backend', 'Group'),
+				//'enableSorting' => false,	
+			],
+
             'description' => [
                 'attribute' => 'description',
                 'label' => Yii::t('backend', 'Description'),
