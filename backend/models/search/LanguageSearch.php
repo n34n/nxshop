@@ -42,15 +42,10 @@ class LanguageSearch extends Language
     public function search($params)
     {
         $query = Language::find();
-        $query->joinWith(['images']);
-        $query->select(['language.*','images.id as img_id','images.path_s']);
-         
-        
-        //$query->all();
         if(!isset($_GET['sort'])){
             $query->orderBy('Order ASC');
         }        
-        //echo  $query->createCommand()->getRawSql();die();
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
