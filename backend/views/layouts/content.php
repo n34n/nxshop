@@ -56,19 +56,16 @@ use yii\helpers\Url;
         <div>
             <ul class="list-unstyled">
             <?php 
-                $language_model = Language::find()->where(['status'=>'10'])->orderBy('order ASC')->all();
-                $language_model = ArrayHelper::toArray($language_model);
-                foreach ($language_model as $language){
-                    echo '<li>';
-                    $src = FILE_PATH.$language['icon'];
-                    $img =  Html::img($src, array('width'=>'30px'));
-                    //echo '<a href="'.Yii::$app->urlManager->createUrl(['index.php?r=language/change','id'=>'zh']).'">中文</a>';
-                    echo Html::a($img, ['language/change', 'id'=> $language['code']], ['class' => 'btn']);
-                    //echo Url::toRoute(['language/change', 'src' => 'ref1', '#' => 'name']);
-                    //echo Url::toRoute(['language/change', 'lang'=> $language['code']]);
-                    echo $language['language'];
-                    //echo HTML::'<img src="">'$language['code'];
-                    echo '</li>';
+            //Language::get
+                $query = Language::find()->joinWith('images')->where(['language.status'=>'10'])->select(['language.language','language.code','images.path_s'])->orderBy('language.order ASC');
+                $obj = $query->all();
+                foreach ($obj as $language){
+					echo '<li>';
+					$src = FILE_PATH.$language->path_s;
+					$img =  Html::img($src);
+					echo Html::a($img, ['language/change', 'id'=> $language->code], ['class' => 'btn']);
+					echo $language->language;
+					echo '</li>';
                 }
             ?>
             </ul>
