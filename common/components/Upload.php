@@ -66,7 +66,7 @@ class Upload extends UploadedFile
 		
 		$data = getimagesize($src_file);
 		if($data[0] == $data[1]){
-			$size['w'] = $size['h'] = $data[0];
+			$size['w'] = $size['h'] = $width;
 		}else{
 			$size = $this->getSize($data,$width,$height);
 		}
