@@ -35,7 +35,9 @@ class ProductOrigin extends \yii\db\ActiveRecord {
 		return [ 
 				[ 
 						[ 
-								'name' 
+								'name',
+								'order',
+								'disabled' 
 						],
 						'required' 
 				],
