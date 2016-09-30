@@ -35,7 +35,8 @@ class ProductBrand extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','order','disabled'], 'required'],
+            
             [['order'], 'integer'],
             [['disabled'], 'string'],
             [['name'], 'string', 'max' => 50],
