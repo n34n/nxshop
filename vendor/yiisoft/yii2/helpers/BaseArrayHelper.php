@@ -473,7 +473,7 @@ class BaseArrayHelper
 
         return $result;
     }
-
+    
     /**
      * Checks if the given array contains the specified key.
      * This method enhances the `array_key_exists()` function by supporting case-insensitive
