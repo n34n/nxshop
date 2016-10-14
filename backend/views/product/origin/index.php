@@ -85,8 +85,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
 
     <?= GridView::widget([
+    		'layout' => '<div class="box-body">{items}</div>
+	                 <div class="box-footer clearfix pull-right">{pager}</div>',
         'dataProvider' => $dataProvider,
-    	'layout' => '<div class="box-body">{items}</div>',
         'columns' => [
         		
         		'path_s' => [
