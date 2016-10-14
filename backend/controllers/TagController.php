@@ -8,24 +8,18 @@ use backend\models\search\TagSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use mdm\admin\components\AccessControl;
 
 /**
  * TagController implements the CRUD actions for Tag model.
  */
 class TagController extends Controller {
+	
 	/**
 	 * @inheritdoc
 	 */
 	public function behaviors() {
-		return [ 
-				'verbs' => [ 
-						'class' => VerbFilter::className (),'actions' => [ 
-								'delete' => [ 
-										'POST' 
-								] 
-						] 
-				] 
-		];
+		return ['verbs'=>['class'=>VerbFilter::className (),'actions'=>['delete'=>['POST']]],'access'=>['class'=>AccessControl::className ()]];
 	}
 	
 	/**
@@ -45,17 +39,13 @@ class TagController extends Controller {
 			
 			$model->save ();
 			
-			return $this->redirect ( [ 
-					'index' 
-			] );
+			return $this->redirect ( ['index'] );
 		}
 		
 		$searchModel = new TagSearch ();
 		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
 		
-		return $this->render ( 'index', [ 
-				'model' => $model,'dataProvider' => $dataProvider 
-		] );
+		return $this->render ( 'index', ['model'=>$model,'dataProvider'=>$dataProvider] );
 	}
 	
 	/**
@@ -65,9 +55,7 @@ class TagController extends Controller {
 	 * @return mixed
 	 */
 	public function actionView($id) {
-		return $this->render ( 'view', [ 
-				'model' => $this->findModel ( $id ) 
-		] );
+		return $this->render ( 'view', ['model'=>$this->findModel ( $id )] );
 	}
 	
 	/**
@@ -80,13 +68,9 @@ class TagController extends Controller {
 		$model = new Tag ();
 		
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
-			return $this->redirect ( [ 
-					'view','id' => $model->tag_id 
-			] );
+			return $this->redirect ( ['view','id'=>$model->tag_id] );
 		} else {
-			return $this->render ( 'create', [ 
-					'model' => $model 
-			] );
+			return $this->render ( 'create', ['model'=>$model] );
 		}
 	}
 	
@@ -98,9 +82,7 @@ class TagController extends Controller {
 	 * @return mixed
 	 */
 	public function actionUpdate($id) {
-		return $this->redirect ( [ 
-				'index','id' => $id 
-		] );
+		return $this->redirect ( ['index','id'=>$id] );
 	}
 	
 	/**
@@ -113,9 +95,7 @@ class TagController extends Controller {
 	public function actionDelete($id) {
 		$this->findModel ( $id )->delete ();
 		
-		return $this->redirect ( [ 
-				'index' 
-		] );
+		return $this->redirect ( ['index'] );
 	}
 	
 	/**

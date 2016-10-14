@@ -32,47 +32,14 @@ class ProductOrigin extends \yii\db\ActiveRecord {
 	 * @inheritdoc
 	 */
 	public function rules() {
-		return [ 
-				[ 
-						[ 
-								'name',
-								'order',
-								'disabled' 
-						],
-						'required' 
-				],
-				[ 
-						[ 
-								'order' 
-						],
-						'integer' 
-				],
-				[ 
-						[ 
-								'disabled' 
-						],
-						'string' 
-				],
-				[ 
-						[ 
-								'name' 
-						],
-						'string',
-						'max' => 50 
-				] 
-		];
+		return [[['name','order','disabled'],'required'],[['order'],'integer'],[['disabled'],'string'],[['name'],'string','max'=>50]];
 	}
 	
 	/**
 	 * @inheritdoc
 	 */
 	public function attributeLabels() {
-		return [ 
-				'origin_id' => 'Origin ID',
-				'name' => 'Name',
-				'order' => 'Order',
-				'disabled' => 'Disabled' 
-		];
+		return ['origin_id'=>'Origin ID','name'=>'Name','order'=>'Order','disabled'=>'Disabled'];
 	}
 	
 	/**
@@ -80,19 +47,13 @@ class ProductOrigin extends \yii\db\ActiveRecord {
 	 * @return \yii\db\ActiveQuery
 	 */
 	public function getProducts() {
-		return $this->hasMany ( Product::className (), [ 
-				'origin_id' => 'origin_id' 
-		] );
+		return $this->hasMany ( Product::className (), ['origin_id'=>'origin_id'] );
 	}
 	public function getImages() {
 		/**
 		 * 第一个参数为要关联的字表模型类名称，
 		 * 第二个参数指定 通过子表的 id 去关联主表的 id 字段
 		 */
-		return $this->hasOne ( Images::className (), [ 
-				'related_id' => 'origin_id' 
-		] )->onCondition ( [ 
-				'images.model' => 'product-origin' 
-		] );
+		return $this->hasOne ( Images::className (), ['related_id'=>'origin_id'] )->onCondition ( ['images.model'=>'product-origin'] );
 	}
 }

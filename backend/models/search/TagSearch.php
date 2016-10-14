@@ -15,17 +15,7 @@ class TagSearch extends Tag {
 	 * @inheritdoc
 	 */
 	public function rules() {
-		return [ 
-				[ 
-						[ 
-								'tag_id' 
-						],'integer' 
-				],[ 
-						[ 
-								'name','type' 
-						],'safe' 
-				] 
-		];
+		return [[['tag_id'],'integer'],[['name','type'],'safe']];
 	}
 	
 	/**
@@ -48,11 +38,7 @@ class TagSearch extends Tag {
 		
 		// add conditions that should always apply here
 		
-		$dataProvider = new ActiveDataProvider ( [ 
-				'query' => $query,'pagination' => [ 
-						'pagesize' => '10' 
-				] 
-		] );
+		$dataProvider = new ActiveDataProvider ( ['query'=>$query,'pagination'=>['pagesize'=>'10']] );
 		
 		$this->load ( $params );
 		
@@ -63,15 +49,9 @@ class TagSearch extends Tag {
 		}
 		
 		// grid filtering conditions
-		$query->andFilterWhere ( [ 
-				'tag_id' => $this->tag_id 
-		] );
+		$query->andFilterWhere ( ['tag_id'=>$this->tag_id] );
 		
-		$query->andFilterWhere ( [ 
-				'like','name',$this->name 
-		] )->andFilterWhere ( [ 
-				'like','type',$this->type 
-		] );
+		$query->andFilterWhere ( ['like','name',$this->name] )->andFilterWhere ( ['like','type',$this->type] );
 		
 		return $dataProvider;
 	}

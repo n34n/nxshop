@@ -12,6 +12,7 @@ use backend\models\Images;
 use common\components\Upload;
 use yii\helpers\ArrayHelper;
 use mdm\admin\components\Helper;
+use mdm\admin\components\AccessControl;
 
 /**
  * ProductCategoryController implements the CRUD actions for ProductCategory model.
@@ -22,16 +23,7 @@ class ProductCategoryController extends Controller {
 	 * @inheritdoc
 	 */
 	public function behaviors() {
-		return [ 
-				'verbs' => [ 
-						'class' => VerbFilter::className (),'actions' => [ ] 
-				] 
-		]
-		// 'delete' => [
-		// 'POST'
-		// ]
-		
-		;
+		return ['verbs'=>['class'=>VerbFilter::className (),'actions'=>[]],'access'=>['class'=>AccessControl::className ()]];
 	}
 	
 	/**
@@ -46,9 +38,7 @@ class ProductCategoryController extends Controller {
 		if (isset ( $_GET ['id'] ) && $_GET ['id'] != '') {
 			$id = $_GET ['id'];
 			$model = $this->findModel ( $id );
-			$img = Images::find ()->where ( [ 
-					'model' => 'product-category','related_id' => $id 
-			] )->one ();
+			$img = Images::find ()->where ( ['model'=>'product-category','related_id'=>$id] )->one ();
 			if ($img) {
 				$model->img_id = $img->id;
 				$model->file = FILE_PATH . $img->path_m;
@@ -57,11 +47,7 @@ class ProductCategoryController extends Controller {
 		
 		if ($model->load ( Yii::$app->request->post () )) {
 			
-			$level = $model->find ()->select ( [ 
-					'level' 
-			] )->where ( [ 
-					'category_id' => $model->pid 
-			] )->one ();
+			$level = $model->find ()->select ( ['level'] )->where ( ['category_id'=>$model->pid] )->one ();
 			
 			if (! $level) {
 				$model->level = 1;
@@ -99,16 +85,12 @@ class ProductCategoryController extends Controller {
 				$img->created_at = time ();
 				$img->save ();
 			}
-			return $this->redirect ( [ 
-					'index' 
-			] );
+			return $this->redirect ( ['index'] );
 		}
 		$searchModel = new ProductCategorySearch ();
 		$dataProvider = $searchModel->search ( Yii::$app->request->getQueryParams () );
 		
-		return $this->render ( '@backend/views/product/category/index', [ 
-				'dataProvider' => $dataProvider,'searchModel' => $searchModel,'model' => $model 
-		] );
+		return $this->render ( '@backend/views/product/category/index', ['dataProvider'=>$dataProvider,'searchModel'=>$searchModel,'model'=>$model] );
 	}
 	
 	/**
@@ -118,9 +100,7 @@ class ProductCategoryController extends Controller {
 	 * @return mixed
 	 */
 	public function actionView($id) {
-		return $this->render ( 'view', [ 
-				'model' => $this->findModel ( $id ) 
-		] );
+		return $this->render ( 'view', ['model'=>$this->findModel ( $id )] );
 	}
 	
 	/**
@@ -132,13 +112,9 @@ class ProductCategoryController extends Controller {
 	public function actionCreate() {
 		$model = new ProductCategory ();
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
-			return $this->redirect ( [ 
-					'view','id' => $model->category_id 
-			] );
+			return $this->redirect ( ['view','id'=>$model->category_id] );
 		} else {
-			return $this->render ( 'create', [ 
-					'model' => $model 
-			] );
+			return $this->render ( 'create', ['model'=>$model] );
 		}
 	}
 	
@@ -153,13 +129,9 @@ class ProductCategoryController extends Controller {
 		$model = $this->findModel ( $id );
 		
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
-			return $this->redirect ( [ 
-					'view','id' => $model->category_id 
-			] );
+			return $this->redirect ( ['view','id'=>$model->category_id] );
 		} else {
-			return $this->render ( 'update', [ 
-					'model' => $model 
-			] );
+			return $this->render ( 'update', ['model'=>$model] );
 		}
 	}
 	
@@ -171,23 +143,17 @@ class ProductCategoryController extends Controller {
 	 * @return mixed
 	 */
 	public function actionDelete($id) {
-		$obj_data = ProductCategory::find ()->where ( [ 
-				'category_id' => $id 
-		] )->one ();
+		$obj_data = ProductCategory::find ()->where ( ['category_id'=>$id] )->one ();
 		$arr_data = ArrayHelper::toArray ( $obj_data );
 		
 		switch ($arr_data ['level']) {
 			case 1 :
-				$del_obj_data = ProductCategory::find ()->where ( [ 
-						'pid' => $id 
-				] )->all ();
+				$del_obj_data = ProductCategory::find ()->where ( ['pid'=>$id] )->all ();
 				$del_arr_data = ArrayHelper::toArray ( $del_obj_data );
 				
 				foreach ( $del_arr_data as $k => $v ) {
 					$this->findModel ( $v ['category_id'] )->delete ();
-					$d_obj_data = ProductCategory::find ()->where ( [ 
-							'pid' => $v ['category_id'] 
-					] )->all ();
+					$d_obj_data = ProductCategory::find ()->where ( ['pid'=>$v ['category_id']] )->all ();
 					$d_arr_data = ArrayHelper::toArray ( $d_obj_data );
 					foreach ( $d_arr_data as $key => $value ) {
 						$this->findModel ( $value ['category_id'] )->delete ();
@@ -196,9 +162,7 @@ class ProductCategoryController extends Controller {
 				$this->findModel ( $id )->delete ();
 				break;
 			case 2 :
-				$del_obj_data = ProductCategory::find ()->where ( [ 
-						'pid' => $id 
-				] )->all ();
+				$del_obj_data = ProductCategory::find ()->where ( ['pid'=>$id] )->all ();
 				$del_arr_data = ArrayHelper::toArray ( $del_obj_data );
 				foreach ( $del_arr_data as $k => $v ) {
 					$this->findModel ( $v ['category_id'] )->delete ();
@@ -208,9 +172,7 @@ class ProductCategoryController extends Controller {
 				$this->findModel ( $id )->delete ();
 				break;
 		}
-		return $this->redirect ( [ 
-				'index' 
-		] );
+		return $this->redirect ( ['index'] );
 	}
 	
 	/**

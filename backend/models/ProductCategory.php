@@ -36,34 +36,14 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	 * @inheritdoc
 	 */
 	public function rules() {
-		return [ 
-				[ 
-						[ 
-								'name' 
-						],'required' 
-				],[ 
-						[ 
-								'pid','level','order' 
-						],'integer' 
-				],[ 
-						[ 
-								'disabled' 
-						],'string' 
-				],[ 
-						[ 
-								'name','path' 
-						],'string','max' => 20 
-				] 
-		];
+		return [[['name'],'required'],[['pid','level','order'],'integer'],[['disabled'],'string'],[['name','path'],'string','max'=>20]];
 	}
 	
 	/**
 	 * @inheritdoc
 	 */
 	public function attributeLabels() {
-		return [ 
-				'category_id' => 'Category ID','name' => 'Name','pid' => 'Pid','level' => 'Level','path' => 'Path','order' => 'Order','disabled' => 'Disabled' 
-		];
+		return ['category_id'=>'Category ID','name'=>'Name','pid'=>'Pid','level'=>'Level','path'=>'Path','order'=>'Order','disabled'=>'Disabled'];
 	}
 	
 	/**
@@ -71,9 +51,7 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	 * @return \yii\db\ActiveQuery
 	 */
 	public function getProductRelCates() {
-		return $this->hasMany ( ProductRelCate::className (), [ 
-				'category_id' => 'category_id' 
-		] );
+		return $this->hasMany ( ProductRelCate::className (), ['category_id'=>'category_id'] );
 	}
 	
 	/**
@@ -81,22 +59,14 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	 * @return \yii\db\ActiveQuery
 	 */
 	public function getProducts() {
-		return $this->hasMany ( Product::className (), [ 
-				'product_id' => 'product_id' 
-		] )->viaTable ( 'product_rel_cate', [ 
-				'category_id' => 'category_id' 
-		] );
+		return $this->hasMany ( Product::className (), ['product_id'=>'product_id'] )->viaTable ( 'product_rel_cate', ['category_id'=>'category_id'] );
 	}
 	public function getImages() {
 		/**
 		 * 第一个参数为要关联的字表模型类名称，
 		 * 第二个参数指定 通过子表的 id 去关联主表的 id 字段
 		 */
-		return $this->hasOne ( Images::className (), [ 
-				'related_id' => 'category_id' 
-		] )->onCondition ( [ 
-				'images.model' => 'product-category' 
-		] );
+		return $this->hasOne ( Images::className (), ['related_id'=>'category_id'] )->onCondition ( ['images.model'=>'product-category'] );
 	}
 	
 	/**
@@ -144,7 +114,7 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	private function getCategoryList() {
 		$list_level_1 = $this->find ()->orderBy ( 'level' )->all ();
 		$list_level_1 = ArrayHelper::toArray ( $list_level_1 );
-		$category_array = array ();
+		$category_array = array();
 		foreach ( $list_level_1 as $list ) {
 			$id = $list ['category_id'];
 			$key = explode ( ',', $list ['path'] );
@@ -173,7 +143,6 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	public function savepath($id, $level) {
 		$arr = Yii::$app->request->post ();
 		$pid = $arr ['ProductCategory'] ['pid'];
-		// $level = $arr['ProductCategory']['level'];
 		
 		switch ($level) {
 			case 1 :
@@ -183,20 +152,12 @@ class ProductCategory extends \yii\db\ActiveRecord {
 				$path = $pid . ',' . $id;
 				break;
 			case 3 :
-				$_pid = $this->find ()->select ( [ 
-						'pid' 
-				] )->where ( [ 
-						'category_id' => $pid 
-				] )->one ();
+				$_pid = $this->find ()->select ( ['pid'] )->where ( ['category_id'=>$pid] )->one ();
 				$_pid = ArrayHelper::toArray ( $_pid );
 				$path = $_pid ['pid'] . ',' . $pid . ',' . $id;
 				break;
 		}
-		$this->updateAll ( [ 
-				'path' => $path 
-		], "category_id=:id", [ 
-				'id' => $id 
-		] );
+		$this->updateAll ( ['path'=>$path], "category_id=:id", ['id'=>$id] );
 		return $path;
 	}
 	
@@ -225,15 +186,11 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	 * @return \yii\db\ActiveRecord|NULL
 	 */
 	public static function getpid() {
-		$data = [ ];
+		$data = [];
 		if (isset ( $_GET ['id'] ) && $_GET ['id'] != '') {
 			$model = new ProductCategory ();
 			
-			$data = $model->find ( [ 
-					'pid' 
-			] )->where ( [ 
-					'category_id' => $_GET ['id'] 
-			] )->one ();
+			$data = $model->find ( ['pid'] )->where ( ['category_id'=>$_GET ['id']] )->one ();
 		}
 		return $data;
 	}
