@@ -50,7 +50,7 @@ class TagSearch extends Tag {
 		
 		$dataProvider = new ActiveDataProvider ( [ 
 				'query' => $query,'pagination' => [ 
-						'pagesize' => '2' 
+						'pagesize' => '10' 
 				] 
 		] );
 		
