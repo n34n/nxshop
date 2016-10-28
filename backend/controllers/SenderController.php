@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Images;
 use common\components\Upload;
-
+use mdm\admin\components\AccessControl;
 /**
  * SenderController implements the CRUD actions for Sender model.
  */
