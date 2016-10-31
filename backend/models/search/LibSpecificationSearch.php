@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\ProductSpecification;
+use backend\models\LibSpecification;
 
 /**
- * ProductSpecificationSearch represents the model behind the search form about `backend\models\ProductSpecification`.
+ * ProductSpecificationSearch represents the model behind the search form about `backend\models\LibSpecification`.
  */
-class ProductSpecificationSearch extends ProductSpecification {
+class LibSpecificationSearch extends LibSpecification {
 	/**
 	 * @inheritdoc
 	 */
@@ -34,7 +34,7 @@ class ProductSpecificationSearch extends ProductSpecification {
 	 * @return ActiveDataProvider
 	 */
 	public function search($params) {
-		$query = ProductSpecification::find ();
+		$query = LibSpecification::find ();
 		
 		// add conditions that should always apply here
 		

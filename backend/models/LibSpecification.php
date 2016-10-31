@@ -12,7 +12,7 @@ use Yii;
  * @property string $name
  * @property integer $order
  */
-class ProductSpecification extends \yii\db\ActiveRecord
+class LibSpecification extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

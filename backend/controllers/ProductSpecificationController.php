@@ -3,15 +3,15 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\ProductSpecification;
-use backend\models\search\ProductSpecificationSearch;
+use backend\models\LibSpecification;
+use backend\models\search\LibSpecificationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use mdm\admin\components\AccessControl;
 
 /**
- * ProductSpecificationController implements the CRUD actions for ProductSpecification model.
+ * ProductSpecificationController implements the CRUD actions for LibSpecification model.
  */
 class ProductSpecificationController extends Controller {
 	/**
@@ -22,12 +22,12 @@ class ProductSpecificationController extends Controller {
 	}
 	
 	/**
-	 * Lists all ProductSpecification models.
+	 * Lists all LibSpecification models.
 	 * 
 	 * @return mixed
 	 */
 	public function actionIndex() {
-		$model = new ProductSpecification ();
+		$model = new LibSpecification ();
 		
 		if (isset ( $_GET ['id'] ) && $_GET ['id'] != '') {
 			$id = $_GET ['id'];
@@ -40,14 +40,14 @@ class ProductSpecificationController extends Controller {
 			return $this->redirect ( ['index'] );
 		}
 		
-		$searchModel = new ProductSpecificationSearch ();
+		$searchModel = new LibSpecificationSearch ();
 		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
 		
 		return $this->render ( '@backend/views/product/specification/index', ['model'=>$model,'dataProvider'=>$dataProvider] );
 	}
 	
 	/**
-	 * Displays a single ProductSpecification model.
+	 * Displays a single LibSpecification model.
 	 * 
 	 * @param integer $id
 	 * @return mixed
@@ -57,13 +57,13 @@ class ProductSpecificationController extends Controller {
 	}
 	
 	/**
-	 * Creates a new ProductSpecification model.
+	 * Creates a new LibSpecification model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 * 
 	 * @return mixed
 	 */
 	public function actionCreate() {
-		$model = new ProductSpecification ();
+		$model = new LibSpecification ();
 		
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
 			return $this->redirect ( ['view','id'=>$model->id] );
@@ -73,7 +73,7 @@ class ProductSpecificationController extends Controller {
 	}
 	
 	/**
-	 * Updates an existing ProductSpecification model.
+	 * Updates an existing LibSpecification model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * 
 	 * @param integer $id
@@ -84,7 +84,7 @@ class ProductSpecificationController extends Controller {
 	}
 	
 	/**
-	 * Deletes an existing ProductSpecification model.
+	 * Deletes an existing LibSpecification model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
 	 * 
 	 * @param integer $id
@@ -97,15 +97,15 @@ class ProductSpecificationController extends Controller {
 	}
 	
 	/**
-	 * Finds the ProductSpecification model based on its primary key value.
+	 * Finds the LibSpecification model based on its primary key value.
 	 * If the model is not found, a 404 HTTP exception will be thrown.
 	 * 
 	 * @param integer $id
-	 * @return ProductSpecification the loaded model
+	 * @return LibSpecification the loaded model
 	 * @throws NotFoundHttpException if the model cannot be found
 	 */
 	protected function findModel($id) {
-		if (($model = ProductSpecification::findOne ( $id )) !== null) {
+		if (($model = LibSpecification::findOne ( $id )) !== null) {
 			return $model;
 		} else {
 			throw new NotFoundHttpException ( 'The requested page does not exist.' );
