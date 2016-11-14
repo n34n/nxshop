@@ -33,12 +33,12 @@ class LibSpecificationSearch extends LibSpecification {
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params) {
-		$query = LibSpecification::find ();
+	public function search($params,$type) {
+		$query = LibSpecification::find ()->where(['type'=>$type]);
 		
 		// add conditions that should always apply here
 		
-		$dataProvider = new ActiveDataProvider ( ['query'=>$query,'pagination'=>['pagesize'=>'10']] );
+		$dataProvider = new ActiveDataProvider ( ['query'=>$query]);
 		
 		$this->load ( $params );
 		
