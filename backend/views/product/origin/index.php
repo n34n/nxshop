@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                           'showZoom' => false,
                           //'width'=>'30px',
                           //'height'=>'auto',
-                          'url'=> 'index.php?r=product-brand/deleteimg&id='.$model->img_id,
+                          'url'=> 'index.php?r=product-origin/deleteimg&id='.$model->img_id,
                           //'key'=>'100',
                           
                       ],

@@ -127,8 +127,21 @@ class ProductOriginController extends Controller {
 	 */
 	public function actionDelete($id) {
 		$this->findModel ( $id )->delete ();
+		$img 	= Images::find()->where(['related_id' => $id])->one();
+		$this->actionDeleteimg($img->id);
 		
 		return $this->redirect ( ['index'] );
+	}
+	
+	public function actionDeleteimg($id)
+	{
+		$model = Images::findOne($id);
+		$file  = new Upload();
+		$file->delFile($model->path_l);
+		$file->delFile($model->path_m);
+		$file->delFile($model->path_s);
+		Images::deleteAll('id='.$id);
+		echo json_encode("succ");
 	}
 	
 	/**
