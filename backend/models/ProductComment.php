@@ -47,11 +47,7 @@ class ProductComment extends \yii\db\ActiveRecord
             [['comment'], 'string', 'max' => 255],
         	//默认项
         	[['member_id'],'default','value'=>yii::$app->user->id],
-        	[['reply_id'],'default','value'=>'0'],
-        	[['comment'],'default','value'=>'Very good'],
         	[['created_at','checked_at'],'default','value'=>time()],
-        	[['display'],'default','value'=>'N'],
-        	[['csi'],'default','value'=>'5'],
         ];
     }
 

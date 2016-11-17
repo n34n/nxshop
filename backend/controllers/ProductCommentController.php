@@ -57,7 +57,7 @@ class ProductCommentController extends Controller {
 	public function actionCreate() {
 		
 		$model = new ProductComment ();
-		$model->csi ='5';
+		$model->loadDefaultValues();//渲染 $model 的 HTML 表单 
 		$initialPreviewConfig = array();
 		if (isset ( $_GET ['id'] ) && $_GET ['id'] != '') {
 			$id = $_GET ['id'];
