@@ -112,8 +112,7 @@ class ProductCategory extends \yii\db\ActiveRecord {
 		;
 	}
 	private function getCategoryList() {
-		$list_level_1 = $this->find ()->orderBy ( 'level' )->all ();
-		$list_level_1 = ArrayHelper::toArray ( $list_level_1 );
+		$list_level_1 = $this->find ()->orderBy ( 'level' )->asArray()->all ();
 		$category_array = array();
 		foreach ( $list_level_1 as $list ) {
 			$id = $list ['category_id'];
@@ -161,37 +160,46 @@ class ProductCategory extends \yii\db\ActiveRecord {
 		return $path;
 	}
 	
-	/**
-	 * 加载下拉层级菜单
-	 * 
-	 * @param unknown $pid
-	 */
-	public function dropDownList($pid = null) {
-		$model = new ProductCategory ();
-		
-		$dropDownList = $model->find ()->where ( "level != 3" )->orderBy ( 'order,level DESC' )->all ();
-		
-		foreach ( $dropDownList as $k => $v ) {
-			if ($v ['level'] == 1) {
-				echo '<option   value=' . $v ['category_id'] . '>' . $v ['name'] . '</option>';
-			} else {
-				echo "<option  value=" . $v ['category_id'] . ">&nbsp&nbsp&nbsp&nbsp" . $v ['name'] . "</option>";
+
+	
+	public static  function getCategoryAll($parentId = 0, $array = [], $level = 0, $add = 2, $repeat = '　 ')
+	{
+		$strRepeat = '';
+		if ($level > 1) {
+			for ($j = 0; $j < $level; $j++) {
+				$strRepeat .= $repeat;
 			}
 		}
-	}
+		$newArray = array ();
+		foreach ((array)$array as $v) {
+			if ($v['pid'] == $parentId) {
+				$item = (array)$v;
+				$item['label'] = $strRepeat . (isset($v['name']) ? $v['name'] : $v['name']);
+				$newArray[] = $item;
 	
-	/**
-	 * 页面加载获取，下拉层级菜单(js)根据pid选中
-	 * 
-	 * @return \yii\db\ActiveRecord|NULL
-	 */
-	public static function getpid() {
-		$data = [];
-		if (isset ( $_GET ['id'] ) && $_GET ['id'] != '') {
-			$model = new ProductCategory ();
-			
-			$data = $model->find ( ['pid'] )->where ( ['category_id'=>$_GET ['id']] )->one ();
+				$tempArray = self::getCategoryAll($v['category_id'], $array, ($level + $add), $add, $repeat);
+				if ($tempArray) {
+					$newArray = array_merge($newArray, $tempArray);
+				}
+			}
 		}
-		return $data;
+		return $newArray;
 	}
+
+// 	private static function orderByCategory($category_array){
+// 		foreach ($category_array as  $level_1){
+// 			$_arr['category_id'] = $level_1['category_id'];
+// 			$_arr['name'] = $level_1['name'];
+// 			$arr[] = $_arr;
+// 			if(isset($level_1['data'])){
+// 				$tmp = self::orderByCategory($level_1['data']);
+// 				if($tmp){
+// 					$arr = array_merge($arr, $tmp);
+// 				}
+// 			}
+// 		}
+// 		return $arr;
+// 	}
+
+	
 }

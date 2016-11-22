@@ -5,20 +5,10 @@ use kartik\file\FileInput;
 use yii\widgets\ActiveForm;
 use backend\models\ProductCategory;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-use mdm\admin\AutocompleteAsset;
 
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\Menu */
 /* @var $form yii\widgets\ActiveForm */
-
-AutocompleteAsset::register($this);
-$opts = Json::htmlEncode([
-		'id' => ProductCategory::getpid(),
-]);
-$this->registerJs("var _opts = $opts;");
-$this->registerJs($this->render('_script.js'));
-
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -86,16 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			?>          
 
 
-    	<div class="form-group field-productcategory-pid">
-			<label class="col-sm-2 control-label" for="productcategory-pid">父级</label><div class="col-sm-10" style="padding-right:30px">
-			<select id="productcategory-pid" class="form-control " name="ProductCategory[pid]">
-				<option value='0'><?php echo Yii::t('backend', 'Please Select ...'); ?></option>
-				<?php 
-					$ProductCategory = new ProductCategory();
-					$ProductCategory->dropDownList($model->pid);
-				?>
-			</select></div><div style="margin:8px 0 0 100px"><div class="help-block"></div></div>
-		</div>
+    		<?= $form->field($model, 'pid')->dropDownList(ArrayHelper::map(ProductCategory::getCategoryAll(0, ProductCategory::find ()->where("level != 3")->orderBy ( 'level' )->asArray()->all ()), 'category_id', 'label'),['prompt' => Yii::t('backend', 'Please Select ...'),'class'=>'selectpicker','data-actions-box'=>'true','data-live-search'=>'true','data-style'=>'form-control','data-style-Base'=>'','data-live-search-placeholder'=>Yii::t('backend', 'Search'),'data-none-Results-Text'=>Yii::t('backend', "No results matched {0}"),'data-select-all-text'=>Yii::t('backend', 'Select All'),'data-deselect-all-text'=>Yii::t('backend', 'Deselect All')])->label(Yii::t('backend', 'Pid')); ?>
 		
             <?= $form->field($model, 'order')->textInput()->label(Yii::t('backend', 'Order')); ?>
             
