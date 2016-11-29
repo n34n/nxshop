@@ -129,16 +129,21 @@ return array (
       '@hyii2/avatar' => $vendorDir . '/hyii2/yii2-avatar',
     ),
   ),
-		
-	
-'yiisoft/yii2-jui' =>
+  'yiisoft/yii2-jui' => 
   array (
     'name' => 'yiisoft/yii2-jui',
-    'alias' =>
+    'alias' => 
     array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-		
-		
+  'yiidoc/yii2-redactor' => 
+  array (
+    'name' => 'yiidoc/yii2-redactor',
+    'version' => '2.0.1.0',
+    'alias' => 
+    array (
+      '@yii/redactor' => '/',
+    ),
+  ),
 );
