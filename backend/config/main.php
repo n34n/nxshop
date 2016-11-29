@@ -16,6 +16,10 @@ return [
         "ctl" => [
             "class" => "mdm\admin\Module",
         ],
+    	'redactor' => [
+    		'class' => 'yii\redactor\RedactorModule',
+    		'imageAllowExtensions'=>['jpg','png','gif']
+    	],
     ],
     'aliases' => [    
         "@mdm/admin" => "@vendor/mdmsoft/yii2-admin",
