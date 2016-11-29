@@ -11,6 +11,8 @@ use kartik\file\FileInput;
 
 $this->title = Yii::t('menu', 'Origin');
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJs('$("div.form-group select").addClass("selectpicker");$("div.form-group select").attr({"data-style" : "form-control","data-style-Base" : ""});',\yii\web\View::POS_END);
 ?>
 <div class="row">
 <?php $form = ActiveForm::begin(
@@ -118,6 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'disabled'=> [
 				'attribute' => 'disabled',
 				'label' => Yii::t('backend', 'Status'),
+            	'format' => 'html',
+            	'value'=> function($model){
+            		return  $model->disabled=='Y'?'<span class="label label-success">'.Yii::t('backend', 'Yes').'</span>':'<span class="label label-danger">'.Yii::t('backend', 'No').'</span>';
+            	},
 				//'enableSorting' => false,
 				],
 			[

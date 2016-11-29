@@ -74,7 +74,7 @@ class ProductCategory extends \yii\db\ActiveRecord {
 	 */
 	public function setCategoryList() {
 		$data = $this->getCategoryList ();
-		
+
 		foreach ( $data as $_menu ) {
 			echo "<tr class='bg-gray disabled color-palette'>";
 			echo "<td>" . $_menu ['name'] . "</td>";
@@ -84,33 +84,29 @@ class ProductCategory extends \yii\db\ActiveRecord {
     		      	<a data-pjax="0" data-confirm="确定要删除该记录吗？" title="删除" href="index.php?r=product-category/delete&id=' . $_menu ['category_id'] . '"><span class="glyphicon glyphicon-trash"></span></a>
     		      </td>';
 			echo "</tr>";
-			
-			if (isset ( $_menu ['data'] )) {
-				foreach ( $_menu ['data'] as $_submenu ) {
-					echo "<tr >";
-					echo "<td style='padding-left:40px'>" . $_submenu ['name'] . "</td>";
-					echo '<td style="text-align:right;">
+			$this->loop($_menu);
+		}
+	}
+
+	private  static function loop($_menu,$interval=40){
+		$intv = $interval+40;
+		
+		if (isset ( $_menu ['data'] )) {
+			foreach ( $_menu ['data'] as $_submenu ) {
+				echo "<tr >";
+				echo "<td style='padding-left:".$interval."px'>" . $_submenu ['name'] . "</td>";
+				echo '<td style="text-align:right;">
 							<a data-pjax="0" title="新增" href="index.php?r=product-category/index"><span class="glyphicon glyphicon-plus-sign"></span></a>
 							<a data-pjax="0" title="修改" href="index.php?r=product-category/index&id=' . $_submenu ['category_id'] . '"><span class="glyphicon glyphicon-pencil"></span></a>
 							<a data-pjax="0" data-confirm="确定要删除该记录吗？" title="删除" href="index.php?r=product-category/delete&id=' . $_submenu ['category_id'] . '"><span class="glyphicon glyphicon-trash"></span></a>
 						  </td>';
-					echo "</tr>";
-					if (isset ( $_submenu ['data'] )) {
-						foreach ( $_submenu ['data'] as $submenu ) {
-							echo "<tr>";
-							echo "<td style='padding-left:80px'>" . $submenu ['name'] . "</td>";
-							echo '<td style="text-align:right;">
-									<a data-pjax="0" title="修改" href="index.php?r=product-category/index&id=' . $submenu ['category_id'] . '"><span class="glyphicon glyphicon-pencil"></span></a>
-									<a data-pjax="0" data-confirm="确定要删除该记录吗？" title="删除" href="index.php?r=product-category/delete&id=' . $submenu ['category_id'] . '"><span class="glyphicon glyphicon-trash"></span></a>
-						  		  </td>';
-							echo "</tr>";
-						}
-					}
-				}
+				echo "</tr>";
+				self::loop($_submenu,$intv);
 			}
 		}
-		;
 	}
+	
+
 	private function getCategoryList() {
 		$list_level_1 = $this->find ()->orderBy ( 'level' )->asArray()->all ();
 		$category_array = array();

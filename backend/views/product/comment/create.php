@@ -12,6 +12,7 @@ use backend\models\ProductComment;
 
 $this->title = Yii::t('menu', 'Comment');
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJs('$("div.form-group select").addClass("selectpicker");$("div.form-group select").attr({"data-style" : "form-control","data-style-Base" : ""});',\yii\web\View::POS_END);
 ?>
 
 <div class="row">
@@ -46,9 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			                        'showRemove' => false,
 			                        'showUpload' => false,
 		                    		// 最少上传的文件个数限制
-		                    		'minFileCount' => 1,
+		                    		'minFileCount' => 0,
 		                    		// 最多上传的文件个数限制
-		                    		'maxFileCount' => 10,
+		                    		'maxFileCount' => 5,
 			                    ]
 			          ]);
 			      }else{

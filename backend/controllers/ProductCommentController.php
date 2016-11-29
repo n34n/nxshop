@@ -87,7 +87,7 @@ class ProductCommentController extends Controller {
 				// save file
 				$filename = md5 ( $this->filepath . time () );
 				$extpath = substr ( $filename, 0, 2 ) . '/' . substr ( $filename, 2, 2 ) . '/';
-				$file->saveFile ( $this->filepath.$extpath, $related_id ,$filename );
+				$file->saveFile ( $this->filepath.$extpath, $related_id ,'product-comment' ,$filename );
 			}
 			return $this->redirect( ['index']);
 		}

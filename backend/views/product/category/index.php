@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			?>          
 
 
-    		<?= $form->field($model, 'pid')->dropDownList(ArrayHelper::map(ProductCategory::getCategoryAll(0, ProductCategory::find ()->where("level != 3")->orderBy ( 'level' )->asArray()->all ()), 'category_id', 'label'),['prompt' => Yii::t('backend', 'Please Select ...'),'class'=>'selectpicker','data-actions-box'=>'true','data-live-search'=>'true','data-style'=>'form-control','data-style-Base'=>'','data-live-search-placeholder'=>Yii::t('backend', 'Search'),'data-none-Results-Text'=>Yii::t('backend', "No results matched {0}"),'data-select-all-text'=>Yii::t('backend', 'Select All'),'data-deselect-all-text'=>Yii::t('backend', 'Deselect All')])->label(Yii::t('backend', 'Pid')); ?>
+    		<?= $form->field($model, 'pid')->dropDownList(ArrayHelper::map(ProductCategory::getCategoryAll(0, ProductCategory::find ()->where("level != 3")->orderBy ( 'level' )->asArray()->all ()), 'category_id', 'label'),['prompt' => Yii::t('backend', 'Please Select ...'),'class'=>'selectpicker','data-actions-box'=>'true','data-live-search'=>'true','data-style'=>'form-control','data-style-Base'=>'','data-live-search-placeholder'=>Yii::t('backend', 'Search'),'data-none-Results-Text'=>Yii::t('backend', "No results matched {0}"),'data-select-all-text'=>Yii::t('backend', 'Select All'),'data-deselect-all-text'=>Yii::t('backend', 'Deselect All')])->label(Yii::t('backend', 'Parent')); ?>
 		
             <?= $form->field($model, 'order')->textInput()->label(Yii::t('backend', 'Order')); ?>
             
