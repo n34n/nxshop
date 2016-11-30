@@ -5,7 +5,6 @@ use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\TagSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('menu', 'Tag');

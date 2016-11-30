@@ -7,7 +7,6 @@ use kartik\file\FileInput;
 
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\SenderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('menu', 'Sender');

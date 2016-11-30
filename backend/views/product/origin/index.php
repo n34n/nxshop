@@ -6,7 +6,6 @@ use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\ProductOriginSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('menu', 'Origin');
