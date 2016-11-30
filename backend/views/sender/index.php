@@ -72,7 +72,7 @@ $this->registerJs('$("div.form-group select").addClass("selectpicker");$("div.fo
 			      }
     		?> 			
 
-			<?= $form->field($model, 'code')->textInput()->label(Yii::t('backend', 'Code')) ?>
+			<?= $form->field($model, 'code')->textInput()->label(Yii::t('backend', 'Delivery Code')) ?>
 			
 			<?= $form->field($model, 'order')->textInput()->label(Yii::t('backend', 'Order')) ?>
 
@@ -126,7 +126,7 @@ $this->registerJs('$("div.form-group select").addClass("selectpicker");$("div.fo
         		
         	'code'=> [
         		'attribute' => 'code',
-        		'label' => Yii::t('backend', 'Code'),
+        		'label' => Yii::t('backend', 'Delivery Code'),
         		//'enableSorting' => false,
         		],
         	'order'=> [
