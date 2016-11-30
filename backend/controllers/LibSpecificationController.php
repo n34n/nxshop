@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\LibSpecification;
-use backend\models\search\LibSpecificationSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,10 +27,8 @@ class LibSpecificationController extends Controller {
 	 * @return mixed
 	 */
 	public function actionIndex() {
-		$searchModel = new LibSpecificationSearch ();
-		$dataProviderSize = $searchModel->search ( Yii::$app->request->queryParams ,'size');
-		$dataProviderColor = $searchModel->search ( Yii::$app->request->queryParams ,'color');
-
+		$dataProviderSize = new ActiveDataProvider(['query' => LibSpecification::find()->where("type= 'size'"),]);
+		$dataProviderColor = new ActiveDataProvider(['query' => LibSpecification::find()->where("type= 'color'"),]);
 		return $this->render ( '@backend/views/product/specification/index', ['dataProviderSize'=>$dataProviderSize,'dataProviderColor'=>$dataProviderColor] );
 	}
 

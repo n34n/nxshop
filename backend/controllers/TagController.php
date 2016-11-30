@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Tag;
-use backend\models\search\TagSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -42,8 +42,7 @@ class TagController extends Controller {
 			return $this->redirect ( ['index'] );
 		}
 		
-		$searchModel = new TagSearch ();
-		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
+		$dataProvider = new ActiveDataProvider(['query' => Tag::find(),'pagination'=>['pagesize'=>'10']]);
 		
 		return $this->render ( 'index', ['model'=>$model,'dataProvider'=>$dataProvider] );
 	}

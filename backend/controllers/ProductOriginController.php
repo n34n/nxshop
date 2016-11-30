@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\ProductOrigin;
-use backend\models\search\ProductOriginSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,9 +74,13 @@ class ProductOriginController extends Controller {
 			
 			return $this->redirect ( ['index'] );
 		}
+
+		$dataProvider = new ActiveDataProvider([
+				'query' => ProductOrigin::find()->joinWith ( ['images'] )->select ( ['product_origin.*','images.id as img_id','images.path_s']),
+				'pagination'=>['pagesize'=>'10']
+		]);
 		
-		$searchModel = new ProductOriginSearch ();
-		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
+		
 		
 		return $this->render ( '@backend/views/product/origin/index', ['model'=>$model,'dataProvider'=>$dataProvider] );
 	}

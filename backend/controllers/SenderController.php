@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Sender;
-use backend\models\search\SenderSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,10 +75,9 @@ class SenderController extends Controller {
 			return $this->redirect ( ['index'] );
 		}
 		
-		$searchModel = new SenderSearch ();
-		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
+		$dataProvider = new ActiveDataProvider ( ['query'=>Sender::find(),'pagination'=>['pagesize'=>'10']] );
 		
-		return $this->render ( 'index', ['model'=>$model,'searchModel'=>$searchModel,'dataProvider'=>$dataProvider] );
+		return $this->render ( 'index', ['model'=>$model,'dataProvider'=>$dataProvider] );
 	}
 	
 	/**

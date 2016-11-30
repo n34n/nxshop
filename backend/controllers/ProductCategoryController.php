@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\ProductCategory;
-use backend\models\search\ProductCategorySearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -87,10 +87,10 @@ class ProductCategoryController extends Controller {
 			}
 			return $this->redirect ( ['index'] );
 		}
-		$searchModel = new ProductCategorySearch ();
-		$dataProvider = $searchModel->search ( Yii::$app->request->getQueryParams () );
+
+		$dataProvider =  new ActiveDataProvider(['query' =>  ProductCategory::find ()]);
 		
-		return $this->render ( '@backend/views/product/category/index', ['dataProvider'=>$dataProvider,'searchModel'=>$searchModel,'model'=>$model] );
+		return $this->render ( '@backend/views/product/category/index', ['dataProvider'=>$dataProvider,'model'=>$model] );
 	}
 	
 	/**
