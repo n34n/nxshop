@@ -23,7 +23,11 @@
         "kartik-v/yii2-widget-fileinput": "@dev",
         "yiisoft/yii2-imagine": "^2.0",
         "hyii2/yii2-avatar": "dev-master",
-        "yiidoc/yii2-redactor": "*"
+        "yiidoc/yii2-redactor": "*",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-editable": "@dev",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-depdrop": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

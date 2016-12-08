@@ -16,10 +16,14 @@ return [
         "ctl" => [
             "class" => "mdm\admin\Module",
         ],
+    	//Redactor编辑器
     	'redactor' => [
     		'class' => 'yii\redactor\RedactorModule',
     		'imageAllowExtensions'=>['jpg','png','gif']
     	],
+    	'gridview' =>  [
+    		'class' => '\kartik\grid\Module'
+    	]	
     ],
     'aliases' => [    
         "@mdm/admin" => "@vendor/mdmsoft/yii2-admin",
